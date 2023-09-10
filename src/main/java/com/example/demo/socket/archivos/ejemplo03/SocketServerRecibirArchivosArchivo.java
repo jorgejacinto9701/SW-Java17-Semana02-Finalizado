@@ -31,8 +31,27 @@ public class SocketServerRecibirArchivosArchivo {
 				ObjectOutputStream ous = new ObjectOutputStream(cliente.getOutputStream());
 				ObjectInputStream ois = new ObjectInputStream(cliente.getInputStream());
 
+				String nombreSeparadoPorComas = (String)ois.readObject();
+				System.out.println("fileName ==> " + nombreSeparadoPorComas);
 				
 				
+				// 2 RECIBE LOS BYTES DEL ARCHIVO
+				// ====================================
+				String[] nameArray = nombreSeparadoPorComas.split(",");
+				DataInputStream entrada = new DataInputStream(cliente.getInputStream());
+				
+				for (int i = 0; i < nameArray.length; i++) {
+					FileOutputStream fos = new FileOutputStream("D:/server/"+nameArray[i]);
+				
+					int byteLeidos;
+					while( (byteLeidos = entrada.read()) != -1) {
+						fos.write(byteLeidos);
+					}
+					
+					fos.close();
+					
+				}
+				entrada.close();
 				cliente.close();
 			}
 		} catch (Exception e) {

@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.Iterator;
 
 public class SocketClienteEnviarArchivo {
 
@@ -26,17 +27,38 @@ public class SocketClienteEnviarArchivo {
 			ObjectOutputStream ous = new ObjectOutputStream(cliente.getOutputStream());
 			ObjectInputStream ois = new ObjectInputStream(cliente.getInputStream());
 			
+			//Las rutas se convierten en un arreglo
+			String[] rutaArray = rutas.split(",");
+			
+			//Se obtiene la lista de nombres de los archivos separados por comas
+			String nombreSeparadoPorComas = ""; 
+			for (int i = 0; i < rutaArray.length; i++) {
+				File fileInicio = new File(rutaArray[i]);
+				String fileName = fileInicio.getName();
+				System.out.println("fileName => " + fileName);
+				nombreSeparadoPorComas += fileName ;
+				if (i < rutaArray.length-1) nombreSeparadoPorComas += ",";
+			}
+			System.out.println("nombreSeparadoPorComas >> " + nombreSeparadoPorComas);
+			
+			//Envia el nombre al server
+			ous.writeObject(nombreSeparadoPorComas);
 			
 
-			// 2 ENVO DE LOS PAQUETES DE BYTES DEL ARCHIVO
+			// 2 ENVIO DE LOS PAQUETES DE BYTES DEL ARCHIVO
 			// ============================================
-			
-			File file = new File("");
-			FileInputStream fis = new FileInputStream(file);
 			DataOutputStream salida = new DataOutputStream(cliente.getOutputStream());
-
 			
-			fis.close();
+			for (int i = 0; i < rutaArray.length; i++) {
+				File file = new File(rutaArray[i]);
+				FileInputStream fis = new FileInputStream(file);
+			
+				int byteLeidos;
+				while( (byteLeidos = fis.read()) != -1) {
+					salida.write(byteLeidos);
+				}
+				fis.close();
+			}
 			salida.close();
 			cliente.close();
 

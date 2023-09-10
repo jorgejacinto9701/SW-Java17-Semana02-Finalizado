@@ -21,8 +21,6 @@ public class Client {
 			FileInputStream fis = new FileInputStream(fileOrigen);
 			DataOutputStream salida = new DataOutputStream(clientServer.getOutputStream());
 			
-			
-			
 			int byteLeidos;
 			while( (byteLeidos = fis.read()) != -1) {
 				salida.write(byteLeidos);

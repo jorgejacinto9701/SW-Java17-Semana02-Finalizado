@@ -31,7 +31,22 @@ public class SocketServerRecibirArchivosArchivo {
 				ObjectOutputStream ous = new ObjectOutputStream(cliente.getOutputStream());
 				ObjectInputStream ois = new ObjectInputStream(cliente.getInputStream());
 
+				String fileName = (String)ois.readObject();
+				System.out.println("fileName ==> " + fileName);
 				
+				// 2 RECIBE LOS BYTES DEL ARCHIVO
+				// ====================================
+				File fileDestino = new File("D:/server/"+fileName);
+				FileOutputStream fos = new FileOutputStream(fileDestino);
+				DataInputStream entrada = new DataInputStream(cliente.getInputStream());
+				
+				int byteLeidos;
+				while( (byteLeidos = entrada.read()) != -1) {
+					fos.write(byteLeidos);
+				}
+				
+				fos.close();
+				entrada.close();
 				cliente.close();
 			}
 		} catch (Exception e) {
