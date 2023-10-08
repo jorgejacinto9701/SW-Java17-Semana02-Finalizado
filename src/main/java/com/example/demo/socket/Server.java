@@ -10,8 +10,7 @@ public class Server {
 	
 	public Server() {
 		Socket clientSocket;
-		try {
-			ServerSocket serverSocket = new ServerSocket(PORT);
+		try (ServerSocket serverSocket = new ServerSocket(PORT)) {
 			while(true) {
 				System.out.println("--------1 Iniciando serverSocket --------------");
 				System.out.println("--------2 A la espera del clientSocket --------");

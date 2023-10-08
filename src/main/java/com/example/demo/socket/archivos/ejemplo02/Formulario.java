@@ -20,7 +20,7 @@ public class Formulario extends JFrame implements ActionListener{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JList lstArchivos;
+	private JList<String> lstArchivos;
 	private JPanel pnlSur;
 	private JButton btnEnviar;
 	private JPanel pnlNorte;
@@ -31,12 +31,12 @@ public class Formulario extends JFrame implements ActionListener{
 	private JButton btnEliminar;
 	private JScrollPane scp;
 	private JLabel lblRuta;
-	private DefaultListModel dlm;
+	private DefaultListModel<String> dlm;
 	
 	public Formulario() {
 		
-		dlm = new DefaultListModel();
-		lstArchivos = new JList(dlm);
+		dlm = new DefaultListModel<String>();
+		lstArchivos = new JList<String>(dlm);
 		scp = new JScrollPane(lstArchivos);
 		
 		

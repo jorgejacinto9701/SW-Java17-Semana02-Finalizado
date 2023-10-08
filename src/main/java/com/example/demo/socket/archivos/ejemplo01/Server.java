@@ -1,9 +1,7 @@
 package com.example.demo.socket.archivos.ejemplo01;
 
 import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -15,8 +13,7 @@ public class Server {
 	
 	public Server() {
 		Socket clientSocket;
-		try {
-			ServerSocket serverSocket = new ServerSocket(PORT);
+		try (ServerSocket serverSocket = new ServerSocket(PORT)) {
 			while(true) {
 				System.out.println("--------1 Iniciando serverSocket Jacinto --------------");
 				System.out.println("--------2 A la espera del clientSocket --------");
